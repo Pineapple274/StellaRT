@@ -685,6 +685,7 @@ int main(int argc, char** argv) {
 
     // scene config
     std::vector<Triangle> triangles;
+    std::string path = "../../../";
 
     Material m;
     m.baseColor = vec3(1, 0.5, 0.5);
@@ -703,7 +704,7 @@ int main(int argc, char** argv) {
     m.clearcoat = 1.0;
     //m.emissive = vec3(10, 20, 10);
     //readObj("models/sphere2.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.85, 0), vec3(0.75, 0.75, 0.75)), true);
-    readObj("models/teapot.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.4, 0), vec3(1.75, 1.75, 1.75)), true);
+    readObj(path + "models/teapot.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0, -0.4, 0), vec3(1.75, 1.75, 1.75)), true);
     //readObj("models/Stanford Bunny.obj", triangles, m, getTransformMatrix(vec3(0, 0, 0), vec3(0.4, -1.5, 0), vec3(2.5, 2.5, 2.5)), true);
 
     m.baseColor = vec3(0.5, 0.5, 1);
@@ -799,7 +800,7 @@ int main(int argc, char** argv) {
 
     // hdr 全景图
     HDRLoaderResult hdrRes;
-    bool r = HDRLoader::load("./HDR/peppermint_powerplant_4k.hdr", hdrRes);
+    bool r = HDRLoader::load((path + "HDR/peppermint_powerplant_4k.hdr").c_str(), hdrRes);
     hdrMap = getTextureRGB32F(hdrRes.width, hdrRes.height);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, hdrRes.width, hdrRes.height, 0, GL_RGB, GL_FLOAT, hdrRes.cols);
 
@@ -807,7 +808,7 @@ int main(int argc, char** argv) {
 
     // 管线配置
 
-    pass1.program = getShaderProgram("./shaders/fshader.fsh", "./shaders/vshader.vsh");
+    pass1.program = getShaderProgram(path + "shaders/fshader.fsh", path + "shaders/vshader.vsh");
     //pass1.width = pass1.height = 256;
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
     pass1.colorAttachments.push_back(getTextureRGB32F(pass1.width, pass1.height));
@@ -821,12 +822,12 @@ int main(int argc, char** argv) {
     glUniform1i(glGetUniformLocation(pass1.program, "height"), pass1.height);
     glUseProgram(0);
 
-    pass2.program = getShaderProgram("./shaders/pass2.fsh", "./shaders/vshader.vsh");
+    pass2.program = getShaderProgram(path + "shaders/pass2.fsh", path + "shaders/vshader.vsh");
     lastFrame = getTextureRGB32F(pass2.width, pass2.height);
     pass2.colorAttachments.push_back(lastFrame);
     pass2.bindData();
 
-    pass3.program = getShaderProgram("./shaders/pass3.fsh", "./shaders/vshader.vsh");
+    pass3.program = getShaderProgram(path + "shaders/pass3.fsh", path + "shaders/vshader.vsh");
     pass3.bindData(true);
 
 
