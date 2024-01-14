@@ -2,6 +2,7 @@
 
 in vec3 pix;
 out vec4 fragColor;
+layout(location = 0) out vec4 diffuseColor;
 
 // ----------------------------------------------------------------------------- //
 
@@ -941,9 +942,9 @@ void main() {
     
     // 和上一帧混合
     vec3 lastColor = texture2D(lastFrame, pix.xy*0.5+0.5).rgb;
-    color = mix(lastColor, color, 1.0/float(frameCounter+1));
+    color = mix(lastColor, color, 1.0/float(frameCounter+1.0));
 
     // 输出
-    gl_FragData[0] = vec4(color, 1.0);
+    diffuseColor = vec4(color, 1.0);
     
 }
