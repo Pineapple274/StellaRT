@@ -555,14 +555,15 @@ int main(int argc, char** argv) {
     glewInit();
 
     // ------------------------------------------------------------------------------------------- //
+    std::string path = "../../../";
 
     // 读 obj
-    readObj("./models/Stanford Bunny.obj", vertices, indices);
+    readObj(path + "models/Stanford Bunny.obj", vertices, indices);
     for (auto& v : vertices) {
         v.x *= 5.0, v.y *= 5.0, v.z *= 5.0;
         v.y -= 0.5;
     }
-    readObj("./models/quad.obj", vertices, indices);
+    readObj(path + "models/quad.obj", vertices, indices);
     // 构建 Triangle 数组
     for (int i = 0; i < indices.size(); i += 3) {
         triangles.push_back(Triangle(vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]));
@@ -610,8 +611,8 @@ int main(int argc, char** argv) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     // 生成着色器程序对象
-    std::string fshaderPath = "./shaders/fshader.fsh";
-    std::string vshaderPath = "./shaders/vshader.vsh";
+    std::string fshaderPath = path + "shaders/fshader.fsh";
+    std::string vshaderPath = path + "shaders/vshader.vsh";
     program = getShaderProgram(fshaderPath, vshaderPath);
     glUseProgram(program);  // 使用着色器
 
