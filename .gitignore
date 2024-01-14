@@ -5,7 +5,7 @@
 *.slo
 *.lo
 *.o
-*.obj
+# *.obj
 
 # Precompiled Headers
 *.gch
@@ -31,6 +31,6 @@
 *.out
 *.app
 
-# Shit
+# Shit For Visual Studio
 out
 .vs
